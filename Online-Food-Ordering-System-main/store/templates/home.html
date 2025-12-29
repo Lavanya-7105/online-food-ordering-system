@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- ===== HERO SECTION ===== -->
+<div class="container-fluid p-0">
+    <div class="hero-cover d-flex align-items-center">
+        <div class="container text-center">
+            <div class="row">
+                
+                <!-- Text Section -->
+                <div class="col-md-12 text-white">
+                    <h1 class="fw-bold display-4">
+                        Welcome to Foodies!
+                    </h1>
+                    <p class="fs-5">
+                        Delicious food delivered to your doorstep
+                    </p>
+
+                    <div class="mt-4">
+                        <a href="{% url 'menu' %}" class="btn btn-primary btn-lg me-2">
+                            View Menu
+                        </a>
+                        <a href="{% url 'orders' %}" class="btn btn-danger btn-lg">
+                            My Order
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- HERO SECTION END -->
+
+
+<!-- ===== POPULAR ITEMS ===== -->
+<h3 class="fw-bold my-4">Popular Items</h3>
+
+<div class="row">
+
+    {% for food in foods %}
+    <div class="col-md-4">
+        <div class="card shadow-sm mb-4">
+
+            <img src="{{ food.image.url }}" class="card-img-top" alt="{{ food.name }}">
+
+            <div class="card-body text-center">
+                <h5 class="card-title">{{ food.name }}</h5>
+                <p class="text-muted">₹{{ food.price }}</p>
+
+                <a href="{% url 'add_to_cart' food.id %}" class="btn btn-primary">
+                    Add to Cart
+                </a>
+
+            </div>
+
+        </div>
+    </div>
+    {% empty %}
+    <p>No popular items available.</p>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
+    &copy; 2024 Foodies. All rights reserved.
+        </div>
+    </div>

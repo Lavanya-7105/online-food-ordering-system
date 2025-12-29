@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<h4>My Orders</h4>
+
+<table class="table table-bordered">
+<thead>
+    <tr>
+        <th>ID</th>
+        <th>Date</th>
+        <th>Items</th>
+        <th>Total</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+</thead>
+
+<tbody>
+{% for order in orders %}
+<tr>
+    <td>#{{ order.id }}</td>
+    <td>{{ order.created_at|date:"d M Y" }}</td>
+
+    <td>
+        <ul>
+            {% for item in order.items.all %}
+                <li>{{ item.food.name }} × {{ item.quantity }}</li>
+            {% endfor %}
+        </ul>
+    </td>
+
+    <td>₹{{ order.total_price }}</td>
+
+    <td>
+        {% if order.status == "Placed" %}
+            <span class="badge bg-warning">{{ order.status }}</span>
+        {% elif order.status == "Cancelled" %}
+            <span class="badge bg-danger">{{ order.status }}</span>
+        {% else %}
+            <span class="badge bg-success">{{ order.status }}</span>
+        {% endif %}
+    </td>
+
+    <td>
+        {% if order.status == "Placed" %}
+        <form method="post" action="{% url 'cancel_order' order.id %}">
+            {% csrf_token %}
+            <button class="btn btn-sm btn-danger">Cancel</button>
+        </form>
+        {% else %}
+            —
+        {% endif %}
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td colspan="6" class="text-center">No orders found</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+
+{% endblock %}
+
+

@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="row justify-content-center">
+    <div class="col-lg-8">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white fw-bold">
+                Your Cart
+            </div>
+
+            <div class="card-body">
+
+                {% for key, item in cart.items %}
+                <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+
+                    <!-- ITEM INFO -->
+                    <div>
+                        <strong>{{ item.name }}</strong>
+                        <div class="text-muted small">
+                            ₹{{ item.price }} × {{ item.quantity }}
+                        </div>
+                    </div>
+
+                    <!-- QUANTITY + REMOVE -->
+                    <div class="d-flex align-items-center gap-2">
+
+                        <!-- QUANTITY -->
+                        <select class="form-select w-auto quantity"
+                                data-id="{{ key }}">
+                            {% for i in "12345" %}
+                            <option value="{{ i }}"
+                                {% if item.quantity|stringformat:"s" == i %}selected{% endif %}>
+                                {{ i }}
+                            </option>
+                            {% endfor %}
+                        </select>
+
+                        <!-- ❌ REMOVE BUTTON -->
+                        <button class="btn btn-outline-danger btn-sm remove-btn"
+                                data-id="{{ key }}">
+                            ❌
+                        </button>
+
+                    </div>
+                </div>
+                {% empty %}
+                <p class="text-center text-muted">Your cart is empty</p>
+                {% endfor %}
+
+                <!-- TOTAL -->
+                <div class="d-flex justify-content-end mt-3">
+                    <h5 class="fw-bold">
+                        Total: ₹<span id="total">{{ total }}</span>
+                    </h5>
+                </div>
+
+                <!-- CHECKOUT -->
+
+                <div class="d-flex justify-content-end gap-2 mt-3">
+
+                    {% if total == 0 %}
+                        <a href="{% url 'menu' %}" class="btn btn-primary">
+                            Go to Menu
+                        </a>
+
+                    {% else %}
+                    {% if user.is_authenticated %}
+                        <a href="{% url 'checkout' %}" class="btn btn-primary">
+                            Proceed to Checkout
+                        </a>
+                    {% else %}
+                        <a href="{% url 'login' %}?next={% url 'checkout' %}" class="btn btn-primary">
+                            Login to Checkout
+                        </a>
+                    {% endif %}
+                    {% endif %} 
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ================= JS ================= -->
+<script>
+/* 🔁 UPDATE QUANTITY */
+document.querySelectorAll('.quantity').forEach(select => {
+    select.addEventListener('change', function () {
+
+        let foodId = this.dataset.id;
+        let quantity = this.value;
+
+        fetch("{% url 'ajax_update_cart' %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `food_id=${foodId}&quantity=${quantity}`
+        })
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('total').innerText = data.total;
+        });
+    });
+});
+
+/* ❌ REMOVE ITEM */
+document.querySelectorAll('.remove-btn').forEach(btn => {
+    btn.addEventListener('click', function () {
+
+        let foodId = this.dataset.id;
+
+        fetch("{% url 'ajax_remove_item' %}", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": "{{ csrf_token }}",
+                "Content-Type": "application/x-www-form-urlencoded"
+            },
+            body: `food_id=${foodId}`
+        })
+        .then(res => res.json())
+        .then(data => {
+            location.reload(); // refresh cart UI
+        });
+    });
+});
+</script>
+
+{% endblock %}

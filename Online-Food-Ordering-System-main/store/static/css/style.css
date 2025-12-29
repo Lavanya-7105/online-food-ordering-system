@@ -1,0 +1,166 @@
+/* =========================
+   GLOBAL STYLES
+========================= */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+a {
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+.navbar-brand {
+    font-size: 1.3rem;
+}
+
+.navbar .nav-link {
+    font-weight: 500;
+    color: white
+}
+
+.navbar .nav-link:hover {
+    text-decoration: underline;
+
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+
+.hero-cover {
+    min-height: 50vh;
+    background: linear-gradient(
+        rgba(0,0,0,0.5),
+        rgba(0,0,0,0.5)
+    ),
+    url("../images/hero-food.jpg") center center / cover no-repeat;
+}
+
+
+/* =========================
+   CARDS
+========================= */
+.card {
+    border-radius: 12px;
+}
+
+.card-header {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    transition: 0.3s ease;
+}
+
+/* =========================
+   BUTTONS
+========================= */
+.btn {
+    border-radius: 8px;
+}
+
+.btn-primary {
+    background-color: #0d6efd;
+    border: none;
+}
+
+.btn-primary:hover {
+    background-color: #0b5ed7;
+}
+
+/* =========================
+   MENU PAGE
+========================= */
+.card-img-top {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+/* =========================
+   CART PAGE
+========================= */
+.list-group-item {
+    font-weight: 500;
+}
+
+/* =========================
+   FORMS (LOGIN / REGISTER / CHECKOUT)
+========================= */
+.form-control {
+    border-radius: 8px;
+}
+
+.form-control:focus {
+    box-shadow: none;
+    border-color: #0d6efd;
+}
+
+label {
+    font-size: 0.9rem;
+}
+
+/* =========================
+   TABLES (ORDERS / ADMIN)
+========================= */
+.table {
+    background-color: #fff;
+}
+
+.table th {
+    font-weight: 600;
+}
+
+/* =========================
+   BADGES
+========================= */
+.badge {
+    font-size: 0.8rem;
+    padding: 6px 10px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+footer {
+    margin-top: 60px;
+}
+
+footer h5,
+footer h6 {
+    font-weight: 600;
+}
+
+footer p,
+footer li {
+    font-size: 0.9rem;
+}
+
+/* =========================
+   ADMIN DASHBOARD
+========================= */
+.admin-card {
+    min-height: 120px;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+    .card h1 {
+        font-size: 1.8rem;
+    }
+
+    .navbar-brand {
+        font-size: 1.1rem;
+    }
+}

@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+<!-- ===== PAGE TITLE ===== -->
+<div class="text-center mb-4">
+    <h2 class="fw-bold">Our Menu</h2>
+    <p class="text-muted">Choose your favorite food</p>
+</div>
+
+<!-- ===== MENU ITEMS ===== -->
+<div class="row ">
+
+    {% for food in foods %}
+    <div class="col-lg-4 col-md-6 mb-4">
+        <div class="card shadow-sm mb-4 h-100">
+
+            <!-- Food Image -->
+            <img src="{{ food.image.url }}"
+                 class="card-img-top"
+                 alt="{{ food.name }}"
+                 style="height:220px; object-fit:cover;">
+
+            <!-- Card Body -->
+            <div class="card-body text-center">
+                <h5 class="card-title fw-bold">{{ food.name }}</h5>
+
+                <p class="text-muted mb-2">
+                    ₹{{ food.price }}
+                </p>
+
+                <a href="{% url 'add_to_cart' food.id %}" class="btn btn-primary">
+                    Add to Cart
+                </a>
+                
+            </div>
+
+        </div>
+    </div>
+    {% empty %}
+    <div class="col-12 text-center">
+        <p class="text-muted">No food items available.</p>
+    </div>
+    {% endfor %}
+
+</div>
+
+{% endblock %}
