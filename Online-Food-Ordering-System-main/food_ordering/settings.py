@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-0=#z6+s90(kf-wo33d4gkinlg#yh#q41&k4*&s9%coe=+%#0-x
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['online-food-ordering-system-5.onrender.com']
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
